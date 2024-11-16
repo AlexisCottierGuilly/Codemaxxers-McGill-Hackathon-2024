@@ -9,7 +9,7 @@ public class CloudGenerator : MonoBehaviour
 
     float ProbabilityFunction(float x, float y, float z)
     {
-        return Mathf.Pow(Mathf.Exp(1), Mathf.Pow(x, 2f) + Mathf.Pow(y, 2f) + Mathf.Pow(z, 2f));
+        return Mathf.Pow(Mathf.Exp(1), -(Mathf.Pow(x, 2f) + Mathf.Pow(y, 2f) + Mathf.Pow(z, 2f)));
     }
 
     float RandomFloat(System.Random rng, float mn, float mx)
@@ -20,8 +20,9 @@ public class CloudGenerator : MonoBehaviour
 
     void SpawnElectrons(int iterations)
     {
+        float T = 0.5f;
         System.Random rng = new System.Random();
-        Vector2 range = new Vector2(-5f, 5f);
+        Vector2 range = new Vector2(-1f, 1f);
 
         for (int i=0; i < iterations; i++)
         {
@@ -29,13 +30,24 @@ public class CloudGenerator : MonoBehaviour
             float y = RandomFloat(rng, range.x, range.y);
             float z = RandomFloat(rng, range.x, range.y);
             float prb = ProbabilityFunction(x, y, z);
-            
-            GameObject electron = Instantiate(electronPrefab, new Vector3(x, y, z), Quaternion.identity, electronsParent.transform);
+
+            float scaling = 5f;
+
+            if (prb > T)
+            {
+                // To get cool graphics
+                prb = Mathf.Pow(prb, 4f);
+
+                GameObject electron = Instantiate(electronPrefab, new Vector3(x * scaling, y * scaling, z * scaling), Quaternion.identity, electronsParent.transform);
+                MeshRenderer renderer = electron.GetComponent<MeshRenderer>();
+                renderer.material.color = new Color(renderer.material.color.r, renderer.material.color.g, renderer.material.color.b, prb);
+            }
+            Debug.Log(i);
         }
     }
 
     void Start()
     {
-        SpawnElectrons(100);
+        SpawnElectrons(5000);
     }
 }
