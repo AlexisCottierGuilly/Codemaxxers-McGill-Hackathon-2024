@@ -31,6 +31,8 @@ public class CameraPoint : MonoBehaviour
     
     void HandleMouseMovement()
     {
+        // If left mouse button is pressed, rotate the orbital
+        // If released, continue rotating with speed
         if (Input.GetButton("Fire1"))
         {
             mouseDown = true;
@@ -64,6 +66,7 @@ public class CameraPoint : MonoBehaviour
 
     void HandleMovement()
     {
+        // Rotate the camera so it faces the orbital (give the effect that the orbital is rotating)
         float scroll = Input.mouseScrollDelta.y;
         distance -= scroll * (0.8f + distance / 10f);
 

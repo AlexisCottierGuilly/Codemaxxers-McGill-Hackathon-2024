@@ -49,12 +49,16 @@ public class CloudGenerator : MonoBehaviour
 
     float ProbabilityFunction2(float x, float y, float z)
     {
+        // 3D function from x, y and z as arguments
+
         //return Mathf.Pow(Mathf.Exp(1), -(Mathf.Pow(x, 2f) + Mathf.Pow(y, 2f) + Mathf.Pow(z, 2f)));
         return Mathf.Pow(Mathf.Exp(1), -(Mathf.Pow(x, 4f) + Mathf.Pow(y, 2f) + Mathf.Pow(z, 2f)));
     }
 
     float ProbabilityFunction(float theta, float phi, float radius)
     {
+        // Test some cool 3d function!
+
         //return 0.5f/radius;
         return Mathf.PerlinNoise(theta+seed, phi+seed) / Mathf.Exp(radius);
 
@@ -71,11 +75,14 @@ public class CloudGenerator : MonoBehaviour
 
     void LoadElectrons(int iterations)
     {
+        // Use the file OrbitalGenerator.cs to create points depending on the orbitals
+
         maxRadius = 0f;
         float scaling = 5f;
 
         List<List<float>> allCoords = orbitalGenerator.GenerateRandomValues(iterations);
 
+        // Find the max radius of the orbital's data and find the max probability to scale things after
         float maxProb = 0f;
         foreach (List<float> coords in allCoords)
         {
@@ -88,6 +95,7 @@ public class CloudGenerator : MonoBehaviour
         }
         float probMultiplier = 8f / maxProb;
 
+        // Generate the "electrons" in 3D from the position and probabilities
         foreach (List<float> coords in allCoords)
         {
             float x = coords[0];
@@ -104,6 +112,8 @@ public class CloudGenerator : MonoBehaviour
 
     void SpawnElectrons(int iterations)
     {
+        // Not used; using the probability functions, generate "electrons"
+
         System.Random rng = new System.Random();
         Vector2 range = new Vector2(-1f, 1f);
 

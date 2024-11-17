@@ -30,6 +30,7 @@ public class IonisationGraphManager : MonoBehaviour
 
     void InitializeGraph()
     {
+        // Get the data into the graph
         foreach (Vector2 point in data)
         {
             Vector2 position = PointToCoordinates(point);
@@ -57,6 +58,8 @@ public class IonisationGraphManager : MonoBehaviour
 
     void LineBetween(Vector2 point1, Vector2 point2)
     {
+        // Create a line between two points to get a continuous graph
+
         Vector2 position1 = PointToCoordinates(point1);
         Vector2 position2 = PointToCoordinates(point2);
 
@@ -74,6 +77,8 @@ public class IonisationGraphManager : MonoBehaviour
 
     Vector2 PointToCoordinates(Vector2 point)
     {
+        // Used in the whole file, it transforms a data point into a UI position
+
         Vector2 percentageOfMax = new Vector2(
             point.x / maxValues.x,
             point.y / maxValues.y
@@ -85,12 +90,14 @@ public class IonisationGraphManager : MonoBehaviour
 
         return new Vector2(
             anchor.transform.position.x - percentageOfMax.x * distanceZeroMax.x,
-            anchor.transform.position.y - percentageOfMax.y * distanceZeroMax.y / 0.65f
+            anchor.transform.position.y - percentageOfMax.y * distanceZeroMax.y / 0.45f
         );
     }
 
     Vector2 FindCorrectScaling()
     {
+        // Used to scale the graph depending on the values in the data
+
         Vector2 scaling = new Vector2(0f, 0f);
 
         foreach (Vector2 point in data)

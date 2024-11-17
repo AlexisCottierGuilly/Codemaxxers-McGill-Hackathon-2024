@@ -23,22 +23,11 @@ public class OrbitalGenerator : MonoBehaviour
         return total;
     }
 
-    public float GetPsi(float rho, float theta, float phi, int n, int l)
-    {
-        if (n == 1 && l == 0)
-            return Mathf.Exp(-rho) * Mathf.Pow(rho, l) * 1f;
-        else if (n == 2 && l == 0)
-            return Mathf.Exp(-rho) * Mathf.Pow(rho, l) * (-rho + 1f);
-        else if (n == 2 && l == 1)
-            return Mathf.Exp(-rho) * Mathf.Pow(rho, l) * (-rho + 1f) * Mathf.Cos(theta);
-        else
-            return 1;
-    }
-
     public float GetGeneralPsi(float rho, float theta, float phi, int n, int l, int m)
     {
         float total = Mathf.Exp(-rho) * Mathf.Pow(rho, l);
 
+        // For each n and l, calculate the psi with different orbital equations.
         switch (n)
         {
             case 1:
@@ -57,6 +46,7 @@ public class OrbitalGenerator : MonoBehaviour
 
         if (l == 1)
         {
+            // TODO: Add each orbital rotations (this one works fine)
             switch (m)
             {
                 case -1:
@@ -104,10 +94,7 @@ public class OrbitalGenerator : MonoBehaviour
 
         while (cnt < num)
         {
-            // float theta = (float)(random.NextDouble() * Mathf.PI);
-            // float phi = (float)(random.NextDouble() * 2 * Mathf.PI);
-            // float rho = (float)(random.NextDouble() * MAX_RHO);
-
+            // Transform the spherical coordinates into 3D coordinates (x, y, z)
             float x = (float)(random.NextDouble() * 2 * max_rho - max_rho);
             float y = (float)(random.NextDouble() * 2 * max_rho - max_rho);
             float z = (float)(random.NextDouble() * 2 * max_rho - max_rho);
@@ -122,6 +109,7 @@ public class OrbitalGenerator : MonoBehaviour
             float alpha = prob / targetProb;
             float u = (float)random.NextDouble();
 
+            // If the probability calculated at the point is close to the target, select the point
             if (u <= alpha)
             {
                 targetProb = prob;
@@ -132,6 +120,8 @@ public class OrbitalGenerator : MonoBehaviour
                 results.Add(new List<float> {x, y, z, prob});
                 cnt++;
             }
+
+            // continue to iterate until we have the good amout of data
         }
 
         return results;

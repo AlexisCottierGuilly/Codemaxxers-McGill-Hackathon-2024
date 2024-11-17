@@ -29,6 +29,8 @@ public class ModifyValueManager : MonoBehaviour
 
     void Update()
     {
+        // If the user presses + or -, change the N parameter in the UI
+
         if (addKeyEnabled)
         {
             int value = 0;
@@ -52,6 +54,8 @@ public class ModifyValueManager : MonoBehaviour
 
     void DidClick()
     {
+        // Deal with parameter changes to control if they can exist
+
         if (parameter == OrbitalParameter.N)
         {
             int value = GameManager.instance.n;
@@ -74,6 +78,7 @@ public class ModifyValueManager : MonoBehaviour
         }
         else if (parameter == OrbitalParameter.M)
         {
+            // Not used in UI; future development
             int value = GameManager.instance.m;
             value += modifier;
             value = Mathf.Max(-GameManager.instance.l, Mathf.Min(value, GameManager.instance.l));
