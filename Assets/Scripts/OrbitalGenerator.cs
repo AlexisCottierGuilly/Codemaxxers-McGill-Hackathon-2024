@@ -35,6 +35,16 @@ public class OrbitalGenerator : MonoBehaviour
     //     r2 = x * x + y * y + z * z
     //     return np.exp(-alpha * r2) * x  i * y  j * z ** k
 
+    public int double_factorial(int n)
+    {
+        int total = 1;
+        for (int i=n; n>0; n-=2)
+        {
+            total *= i;
+        }   
+        return total;
+    }
+
     public float GetNormalizationConstant(n)
     {
         int i = basis[n][0];
@@ -42,11 +52,19 @@ public class OrbitalGenerator : MonoBehaviour
         int k = basis[n][2];
         float alpha = basis[n][3];
         leading_term = (2 * alpha / Mathf.PI)  (3 / 4) * (4 * alpha)  ((i + j + k) / 2)
-        return leading_term / np.sqrt(factorial_term)
-
+        factorial_term = double_factorial(2 * i - 1) * double_factorial(2 * j - 1) * double_factorial(2 * k - 1)
+        return leading_term / Mathf.Sqrt(factorial_term)
+    }
+    public float GetGaussianOrbital(float x, float y, float z, int n) {
+        int i = basis[n][0];
+        int j = basis[n][1];
+        int k = basis[n][2];
+        float alpha = basis[n][3];
+        float r2 = x * x + y * y + z * z;
+        return Mathf.Exp(-alpha * r2) * Mathf.Pow(x, i) * Mathf.Pow(y, j) * Mathf.Pow(z, k);
     }
 
-    public float GetNeon(float x, y, z) {
+    public float GetNeon(float x, float y, float z) {
         
         List<List<float>> P = new List<List<float>> {
             { 6.66151996e+00f, -4.47463509e+00f, -4.51935227e-02f, -4.51935227e-02f, -4.51935227e-02f}
@@ -54,10 +72,16 @@ public class OrbitalGenerator : MonoBehaviour
             {-4.51935227e-02f,  9.27408624e-02f,  2.42302703e-03f,  2.42302703e-03f, 2.42302703e-03f}
             {-4.51935227e-02f,  9.27408624e-02f,  2.42302703e-03f,  2.42302703e-03f, 2.42302703e-03f}
             {-4.51935227e-02f,  9.27408624e-02f,  2.42302703e-03f,  2.42302703e-03f, 2.42302703e-03f}}
-        
 
-
-        
+        float density = 0;
+        for (int i = 0; i < 5; i++)
+        {
+            for (int j = 0; j < 5; j++)
+            {
+                density += P[j][i] * GetGaussianOrbital(x, y, z, i) * GetGaussianOrbital(x, y, z, j);
+            }
+        }
+        return density;
     }
     public float GetGeneralPsi(float rho, float theta, float phi, int n, int l, int m)
     {
