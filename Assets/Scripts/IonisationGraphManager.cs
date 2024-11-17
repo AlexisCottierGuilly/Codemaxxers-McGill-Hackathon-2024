@@ -90,7 +90,7 @@ public class IonisationGraphManager : MonoBehaviour
 
         return new Vector2(
             anchor.transform.position.x - percentageOfMax.x * distanceZeroMax.x,
-            anchor.transform.position.y - percentageOfMax.y * distanceZeroMax.y / 0.45f
+            anchor.transform.position.y - percentageOfMax.y * distanceZeroMax.y / 0.75f
         );
     }
 

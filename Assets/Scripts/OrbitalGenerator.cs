@@ -7,7 +7,7 @@ public class OrbitalGenerator : MonoBehaviour
     // Random number generator
     private System.Random random = new System.Random();
     float max_rho = 7f;
-    List<List<float>> basis = new List<List<float>> {{0, 0, 0,2.709498091}, {0, 0, 0, 1.012151084}, {1, 0, 0, 1.759666885}, {0, 1, 0, 1.759666885}, {0, 0, 1, 1.759666885}};
+    List<List<float>> basis = new List<List<float>>{new List<float>{0, 0, 0, 2.709498091f}, new List<float>{0, 0, 0, 1.012151084f}, new List<float>{1, 0, 0, 1.759666885f}, new List<float>{0, 1, 0, 1.759666885f}, new List<float>{0, 0, 1, 1.759666885f}};
     void Start()
     {
 
@@ -45,20 +45,20 @@ public class OrbitalGenerator : MonoBehaviour
         return total;
     }
 
-    public float GetNormalizationConstant(n)
+    public float GetNormalizationConstant(int n)
     {
-        int i = basis[n][0];
-        int j = basis[n][1];
-        int k = basis[n][2];
+        int i = (int)basis[n][0];
+        int j = (int)basis[n][1];
+        int k = (int)basis[n][2];
         float alpha = basis[n][3];
-        leading_term = (2 * alpha / Mathf.PI)  (3 / 4) * (4 * alpha)  ((i + j + k) / 2)
-        factorial_term = double_factorial(2 * i - 1) * double_factorial(2 * j - 1) * double_factorial(2 * k - 1)
-        return leading_term / Mathf.Sqrt(factorial_term)
+        float leading_term = (2 * alpha / Mathf.PI)  * (3 / 4) * (4 * alpha)  * ((i + j + k) / 2);
+        float factorial_term = (float)(double_factorial(2 * i - 1) * double_factorial(2 * j - 1) * double_factorial(2 * k - 1));
+        return leading_term / Mathf.Sqrt(factorial_term);
     }
     public float GetGaussianOrbital(float x, float y, float z, int n) {
-        int i = basis[n][0];
-        int j = basis[n][1];
-        int k = basis[n][2];
+        int i = (int)basis[n][0];
+        int j = (int)basis[n][1];
+        int k = (int)basis[n][2];
         float alpha = basis[n][3];
         float r2 = x * x + y * y + z * z;
         return Mathf.Exp(-alpha * r2) * Mathf.Pow(x, i) * Mathf.Pow(y, j) * Mathf.Pow(z, k);
@@ -67,11 +67,11 @@ public class OrbitalGenerator : MonoBehaviour
     public float GetNeon(float x, float y, float z) {
         
         List<List<float>> P = new List<List<float>> {
-            { 6.66151996e+00f, -4.47463509e+00f, -4.51935227e-02f, -4.51935227e-02f, -4.51935227e-02f}
-            {-4.47463509e+00f,  4.84450024e+00f,  9.27408624e-02f,  9.27408624e-02f, 9.27408624e-02f}
-            {-4.51935227e-02f,  9.27408624e-02f,  2.42302703e-03f,  2.42302703e-03f, 2.42302703e-03f}
-            {-4.51935227e-02f,  9.27408624e-02f,  2.42302703e-03f,  2.42302703e-03f, 2.42302703e-03f}
-            {-4.51935227e-02f,  9.27408624e-02f,  2.42302703e-03f,  2.42302703e-03f, 2.42302703e-03f}}
+            new List<float>{ 6.66151996e+00f, -4.47463509e+00f, -4.51935227e-02f, -4.51935227e-02f, -4.51935227e-02f},
+            new List<float>{-4.47463509e+00f,  4.84450024e+00f,  9.27408624e-02f,  9.27408624e-02f, 9.27408624e-02f},
+            new List<float>{-4.51935227e-02f,  9.27408624e-02f,  2.42302703e-03f,  2.42302703e-03f, 2.42302703e-03f},
+            new List<float>{-4.51935227e-02f,  9.27408624e-02f,  2.42302703e-03f,  2.42302703e-03f, 2.42302703e-03f},
+            new List<float>{-4.51935227e-02f,  9.27408624e-02f,  2.42302703e-03f,  2.42302703e-03f, 2.42302703e-03f}};
 
         float density = 0;
         for (int i = 0; i < 5; i++)
@@ -83,6 +83,7 @@ public class OrbitalGenerator : MonoBehaviour
         }
         return density;
     }
+
     public float GetGeneralPsi(float rho, float theta, float phi, int n, int l, int m)
     {
         float total = Mathf.Exp(-rho) * Mathf.Pow(rho, l);
@@ -148,8 +149,12 @@ public class OrbitalGenerator : MonoBehaviour
         max_rho *= (0.5f + n/2f);
 
         List<List<float>> results = new List<List<float>>();
-        float targetProb = GetGeneralPsi(0, 0, 0, n, l, m) * GetGeneralPsi(0, 0, 0, n, l, m);
-
+        float targetProb;
+        if (GameManager.instance.neonMode)
+            targetProb = GetNeon(0, 0, 0);
+        else
+            targetProb = GetGeneralPsi(0, 0, 0, n, l, m) * GetGeneralPsi(0, 0, 0, n, l, m);
+        
         int cnt = 0;
 
         while (cnt < num)
@@ -163,8 +168,14 @@ public class OrbitalGenerator : MonoBehaviour
             float theta = Mathf.Acos(z / rho);
             float phi = Mathf.Atan2(y, x);
 
-            float psi = GetGeneralPsi(rho, theta, phi, n, l, m);
-            float prob = psi * psi;
+            float prob;
+            if (GameManager.instance.neonMode)
+                prob = GetNeon(x, y, z) * x * x;
+            else
+            {
+                float psi = GetGeneralPsi(rho, theta, phi, n, l, m);
+                prob = psi * psi;
+            }
 
             float alpha = prob / targetProb;
             float u = (float)random.NextDouble();

@@ -180,7 +180,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: View Energy Graph
+  m_text: View Energy Graphs
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f1f8203549d513e44b901ac30e4634fd, type: 2}
   m_sharedMaterial: {fileID: 7682347566320347239, guid: f1f8203549d513e44b901ac30e4634fd, type: 2}
@@ -528,6 +528,7 @@ MonoBehaviour:
   n: 1
   l: 0
   m: 0
+  neonMode: 0
 --- !u!4 &663536680
 Transform:
   m_ObjectHideFlags: 0

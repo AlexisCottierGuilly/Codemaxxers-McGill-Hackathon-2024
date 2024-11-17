@@ -53,7 +53,7 @@ public class OrbitalEnergiesGraphManager : MonoBehaviour
 
         float percentageOfMax = energy / maxValue;
         float distanceZeroMax = maxPosition - anchor.transform.position.y;
-        return anchor.transform.position.y - percentageOfMax * distanceZeroMax / 0.45f;
+        return anchor.transform.position.y - percentageOfMax * distanceZeroMax / 0.75f;
     }
 
     void UpdateMaxValues()
