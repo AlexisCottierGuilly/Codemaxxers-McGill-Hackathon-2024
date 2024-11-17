@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     public int n = 1;
     public int l = 0;
     public int m = 0;
+
+    public bool neonMode = false;
     
     public static GameManager instance;
 

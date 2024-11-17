@@ -2659,6 +2659,7 @@ MonoBehaviour:
   n: 1
   l: 0
   m: 0
+  neonMode: 1
 --- !u!4 &1788439277
 Transform:
   m_ObjectHideFlags: 0

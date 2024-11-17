@@ -80,7 +80,11 @@ public class CloudGenerator : MonoBehaviour
         maxRadius = 0f;
         float scaling = 5f;
 
-        List<List<float>> allCoords = orbitalGenerator.GenerateRandomValues(iterations);
+        List<List<float>> allCoords;
+        if (GameManager.instance.neonMode)
+            allCoords = orbitalGenerator.ExtractNeonDensities();
+        else
+            allCoords = orbitalGenerator.GenerateRandomValues(iterations);
 
         // Find the max radius of the orbital's data and find the max probability to scale things after
         float maxProb = 0f;

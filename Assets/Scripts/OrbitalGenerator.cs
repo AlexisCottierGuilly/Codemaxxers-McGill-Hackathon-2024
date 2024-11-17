@@ -7,7 +7,7 @@ public class OrbitalGenerator : MonoBehaviour
     // Random number generator
     private System.Random random = new System.Random();
     float max_rho = 7f;
-
+    List<List<float>> basis = new List<List<float>> {{0, 0, 0,2.709498091}, {0, 0, 0, 1.012151084}, {1, 0, 0, 1.759666885}, {0, 1, 0, 1.759666885}, {0, 0, 1, 1.759666885}};
     void Start()
     {
 
@@ -22,7 +22,43 @@ public class OrbitalGenerator : MonoBehaviour
         }   
         return total;
     }
+    //     def get_normalization_constant(n):
+    //     i, j, k, alpha = basis[n]
+    //     leading_term = (2 * alpha / np.pi)  (3 / 4) * (4 * alpha)  ((i + j + k) / 2)
+    //     factorial_term = np.prod(np.arange(2 * i - 1, 0, -2) * np.arange(2 * j - 1, 0, -2) * np.arange(2 * k - 1, 0, -2))
+    //     return leading_term / np.sqrt(factorial_term)
+    // normalisation = [get_normalization_constant(i) for i in range(NUM_BASIS)]
 
+
+
+    // def get_gaussian_orbital(x, y, z, i, j, k, alpha):
+    //     r2 = x * x + y * y + z * z
+    //     return np.exp(-alpha * r2) * x  i * y  j * z ** k
+
+    public float GetNormalizationConstant(n)
+    {
+        int i = basis[n][0];
+        int j = basis[n][1];
+        int k = basis[n][2];
+        float alpha = basis[n][3];
+        leading_term = (2 * alpha / Mathf.PI)  (3 / 4) * (4 * alpha)  ((i + j + k) / 2)
+        return leading_term / np.sqrt(factorial_term)
+
+    }
+
+    public float GetNeon(float x, y, z) {
+        
+        List<List<float>> P = new List<List<float>> {
+            { 6.66151996e+00f, -4.47463509e+00f, -4.51935227e-02f, -4.51935227e-02f, -4.51935227e-02f}
+            {-4.47463509e+00f,  4.84450024e+00f,  9.27408624e-02f,  9.27408624e-02f, 9.27408624e-02f}
+            {-4.51935227e-02f,  9.27408624e-02f,  2.42302703e-03f,  2.42302703e-03f, 2.42302703e-03f}
+            {-4.51935227e-02f,  9.27408624e-02f,  2.42302703e-03f,  2.42302703e-03f, 2.42302703e-03f}
+            {-4.51935227e-02f,  9.27408624e-02f,  2.42302703e-03f,  2.42302703e-03f, 2.42302703e-03f}}
+        
+
+
+        
+    }
     public float GetGeneralPsi(float rho, float theta, float phi, int n, int l, int m)
     {
         float total = Mathf.Exp(-rho) * Mathf.Pow(rho, l);
@@ -125,5 +161,42 @@ public class OrbitalGenerator : MonoBehaviour
         }
 
         return results;
+    }
+
+    public List<List<float>> ExtractNeonDensities()
+    {
+        var result = new List<List<float>>();
+        string filePath = "Assets/Scripts/NeonDensities.txt";
+
+        foreach (var line in System.IO.File.ReadLines(filePath))
+        {
+            var values = line.Split(new[] { ' ', '\t' }, System.StringSplitOptions.RemoveEmptyEntries);
+
+            if (values.Length == 4)
+            {
+                var point = new List<float>();
+
+                foreach (var value in values)
+                {
+                    Debug.Log(value);
+                    if (float.TryParse((string)value.Replace(".", ","), out var floatValue))
+                    {
+                        point.Add(floatValue);
+                        Debug.Log(floatValue);
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"Invalid float value found: {value} in line: {line}");
+                    }
+                }
+                
+
+                Debug.Log($"{point[0]}, {point[1]}, {point[2]}");
+
+                result.Add(point);
+            }
+        }
+
+        return result;
     }
 }
