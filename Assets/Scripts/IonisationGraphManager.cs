@@ -41,6 +41,9 @@ public class IonisationGraphManager : MonoBehaviour
         {
             LineBetween(data[i], data[i+1]);
         }
+
+        // https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Supplemental_Modules_(Physical_and_Theoretical_Chemistry)/Physical_Properties_of_Matter/Atomic_and_Molecular_Properties/Ionization_Energy
+        // https://en.wikipedia.org/wiki/Molar_ionization_energies_of_the_elements
     }
 
     void UpdateMaxValues()

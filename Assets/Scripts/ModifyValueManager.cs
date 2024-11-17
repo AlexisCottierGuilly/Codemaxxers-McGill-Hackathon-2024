@@ -66,7 +66,7 @@ public class ModifyValueManager : MonoBehaviour
         {
             int value = GameManager.instance.l;
             value += modifier;
-            value = Mathf.Max(0, Mathf.Min(value, 3));
+            value = Mathf.Max(0, Mathf.Min(value, 4));
             GameManager.instance.l = value;
 
             if (value >= GameManager.instance.n)
