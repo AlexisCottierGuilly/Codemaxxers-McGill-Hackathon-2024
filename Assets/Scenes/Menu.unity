@@ -938,7 +938,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Orbital Simulator
+  m_text: Quantum Cloud
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f1f8203549d513e44b901ac30e4634fd, type: 2}
   m_sharedMaterial: {fileID: 7682347566320347239, guid: f1f8203549d513e44b901ac30e4634fd, type: 2}

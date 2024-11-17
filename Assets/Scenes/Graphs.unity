@@ -1117,14 +1117,22 @@ MonoBehaviour:
   data:
   - name: 1s
     energy: 5
+    length: 1
   - name: 2s
     energy: 10
+    length: 1
   - name: 2p
-    energy: 12
+    energy: 13
+    length: 3
   - name: 3s
     energy: 18
+    length: 1
   - name: 3p
     energy: 21
+    length: 3
+  - name: 3d
+    energy: 24
+    length: 5
 --- !u!1 &853189963
 GameObject:
   m_ObjectHideFlags: 0
@@ -2295,10 +2303,30 @@ MonoBehaviour:
   dotsParent: {fileID: 1326630909}
   linesParent: {fileID: 1287348656}
   data:
-  - {x: 0, y: 0}
-  - {x: 1, y: 1}
-  - {x: 2, y: 2}
-  - {x: 3, y: 4}
+  - {x: 0, y: 1312}
+  - {x: 1, y: 2372.3}
+  - {x: 2, y: 520.2}
+  - {x: 3, y: 899.5}
+  - {x: 4, y: 800.6}
+  - {x: 5, y: 1086.5}
+  - {x: 6, y: 1402.3}
+  - {x: 7, y: 1313.9}
+  - {x: 8, y: 1681}
+  - {x: 9, y: 2080.7}
+  - {x: 10, y: 495.8}
+  - {x: 11, y: 737.7}
+  - {x: 12, y: 577.5}
+  - {x: 13, y: 786.5}
+  - {x: 14, y: 1011.8}
+  - {x: 15, y: 999.6}
+  - {x: 16, y: 1251.2}
+  - {x: 17, y: 1520.6}
+  - {x: 18, y: 418.8}
+  - {x: 19, y: 589.8}
+  - {x: 20, y: 633.1}
+  - {x: 21, y: 658.8}
+  - {x: 22, y: 650.9}
+  - {x: 23, y: 652.9}
 --- !u!1001 &1907710827
 PrefabInstance:
   m_ObjectHideFlags: 0
