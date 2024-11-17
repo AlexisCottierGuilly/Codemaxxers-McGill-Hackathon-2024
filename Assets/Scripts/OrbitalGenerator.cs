@@ -93,6 +93,8 @@ public class OrbitalGenerator : MonoBehaviour
         int l = GameManager.instance.l;
         int m = GameManager.instance.m;
 
+        n -= Mathf.Max(l - 1, 0);
+
         max_rho *= (0.5f + n/2f);
 
         List<List<float>> results = new List<List<float>>();

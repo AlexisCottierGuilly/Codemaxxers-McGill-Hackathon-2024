@@ -16,6 +16,13 @@ public class CameraPoint : MonoBehaviour
     private Vector2 lastMousePosition;
     private float lastNonZeroSpeed = 0;
 
+    private float maxRadiusModifier = 2f;
+
+    void Start()
+    {
+        distance = cloudGenerator.maxRadius * maxRadiusModifier;
+    }
+
     void Update()
     {
         HandleMouseMovement();
@@ -60,7 +67,7 @@ public class CameraPoint : MonoBehaviour
         float scroll = Input.mouseScrollDelta.y;
         distance -= scroll * (0.8f + distance / 10f);
 
-        distance = Mathf.Max(Mathf.Min(cloudGenerator.maxRadius * 2f, distance), 2f);
+        distance = Mathf.Max(Mathf.Min(cloudGenerator.maxRadius * maxRadiusModifier, distance), 2f);
         
         if (!mouseDown)
         {

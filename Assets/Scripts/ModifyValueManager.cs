@@ -29,15 +29,24 @@ public class ModifyValueManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Equals))
+        if (addKeyEnabled)
         {
-            int value = GameManager.instance.n;
-            value += 1;
-            value = Mathf.Max(1, Mathf.Min(value, GameManager.instance.l + 3));
-            GameManager.instance.n = value;
+            int value = 0;
+            if (Input.GetKeyDown(KeyCode.Equals))
+                value += 1;    
+            else if (Input.GetKeyDown(KeyCode.Minus))
+                value -= 1;
+            
+            if (value != 0)
+            {
+                int lastValue = GameManager.instance.n;
+                lastValue += value;
+                lastValue = Mathf.Max(1, Mathf.Min(lastValue, GameManager.instance.l + 3));
+                GameManager.instance.n = lastValue;
 
-            if (value <= GameManager.instance.l)
-                GameManager.instance.l = value - 1;
+                if (lastValue <= GameManager.instance.l)
+                    GameManager.instance.l = lastValue - 1;
+            }
         }
     }
 
