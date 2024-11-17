@@ -62,7 +62,7 @@ public class CameraPoint : MonoBehaviour
 
         distance = Mathf.Max(Mathf.Min(cloudGenerator.maxRadius * 2f, distance), 2f);
         
-        if (!mouseDown && false)
+        if (!mouseDown)
         {
             transform.Translate(new Vector3(speed.x, 0, 0) * Time.deltaTime * speedModifier * distance);
             transform.LookAt(target.transform);

@@ -76,6 +76,10 @@ public class OrbitalGenerator : MonoBehaviour
         }
         else if (l == 3)
         {
+            total *= 5f * Mathf.Pow(Mathf.Cos(theta), 3f) - 3f * Mathf.Cos(theta);
+        }
+        else if (l == 4)
+        {
             total *= 35f * Mathf.Pow(Mathf.Cos(theta), 4f) - 30f * Mathf.Pow(Mathf.Cos(theta), 2f) + 3f;
         }
 
@@ -85,9 +89,9 @@ public class OrbitalGenerator : MonoBehaviour
     // Function to generate random values for x, y, z, rho, theta, and phi
     public List<List<float>> GenerateRandomValues(int num)
     {
-        int n = 2;
-        int l = 1;
-        int m = 1;
+        int n = 1;
+        int l = 3;
+        int m = 0;
 
         max_rho *= (0.5f + n/2f);
 
