@@ -12,11 +12,29 @@ public class CloudGenerator : MonoBehaviour
     public int seed;
     public float maxRadius = 0f;
 
+    private List<GameObject> electrons = new List<GameObject>();
+
     void Start()
     {
         seed = Random.Range(0, 1000000);
         //SpawnElectrons(1000);
+        Reload();
+    }
+
+    public void Reload()
+    {
+        DeleteAll();
         LoadElectrons(5000);
+    }
+
+    void DeleteAll()
+    {
+        foreach (GameObject electron in electrons)
+        {
+            Destroy(electron);
+        }
+
+        electrons = new List<GameObject>();
     }
 
     int Factorial(int n)
@@ -80,6 +98,7 @@ public class CloudGenerator : MonoBehaviour
             GameObject electron = Instantiate(electronPrefab, new Vector3(x * scaling, y * scaling, z * scaling), Quaternion.identity, electronsParent.transform);
             MeshRenderer renderer = electron.GetComponent<MeshRenderer>();
             renderer.material.color = new Color(renderer.material.color.r, renderer.material.color.g, renderer.material.color.b, prob * probMultiplier);
+            electrons.Add(electron);
         }
     }
 
@@ -115,6 +134,7 @@ public class CloudGenerator : MonoBehaviour
                 GameObject electron = Instantiate(electronPrefab, new Vector3(x * scaling, y * scaling, z * scaling), Quaternion.identity, electronsParent.transform);
                 MeshRenderer renderer = electron.GetComponent<MeshRenderer>();
                 renderer.material.color = new Color(renderer.material.color.r, renderer.material.color.g, renderer.material.color.b, prb);
+                electrons.Add(electron);
             }
         }
     }

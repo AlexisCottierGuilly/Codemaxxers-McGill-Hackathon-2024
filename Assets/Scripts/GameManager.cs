@@ -6,8 +6,12 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public int score;
+
+    public int n = 1;
+    public int l = 0;
+    public int m = 0;
     
-    private static GameManager instance;
+    public static GameManager instance;
 
     private void Awake()
     {

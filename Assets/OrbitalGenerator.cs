@@ -89,9 +89,9 @@ public class OrbitalGenerator : MonoBehaviour
     // Function to generate random values for x, y, z, rho, theta, and phi
     public List<List<float>> GenerateRandomValues(int num)
     {
-        int n = 1;
-        int l = 3;
-        int m = 0;
+        int n = GameManager.instance.n;
+        int l = GameManager.instance.l;
+        int m = GameManager.instance.m;
 
         max_rho *= (0.5f + n/2f);
 
