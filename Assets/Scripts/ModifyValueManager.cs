@@ -17,8 +17,6 @@ public class ModifyValueManager : MonoBehaviour
     public OrbitalParameter parameter = OrbitalParameter.N;
     public int modifier = 1;
 
-    public bool addKeyEnabled = false;
-
     private Button button;
 
     void Start()
@@ -33,11 +31,8 @@ public class ModifyValueManager : MonoBehaviour
         {
             int value = GameManager.instance.n;
             value += 1;
-            value = Mathf.Max(1, Mathf.Min(value, GameManager.instance.l + 3));
+            value = Mathf.Max(1, value);
             GameManager.instance.n = value;
-
-            if (value <= GameManager.instance.l)
-                GameManager.instance.l = value - 1;
         }
     }
 
@@ -47,21 +42,15 @@ public class ModifyValueManager : MonoBehaviour
         {
             int value = GameManager.instance.n;
             value += modifier;
-            value = Mathf.Max(1, Mathf.Min(value, GameManager.instance.l + 3));
+            value = Mathf.Max(1, value);
             GameManager.instance.n = value;
-
-            if (value <= GameManager.instance.l)
-                GameManager.instance.l = value - 1;
         }
         else if (parameter == OrbitalParameter.L)
         {
             int value = GameManager.instance.l;
             value += modifier;
-            value = Mathf.Max(0, Mathf.Min(value, 3));
+            value = Mathf.Max(0, value);
             GameManager.instance.l = value;
-
-            if (value >= GameManager.instance.n)
-                GameManager.instance.n = value + 1;
         }
         else if (parameter == OrbitalParameter.M)
         {
